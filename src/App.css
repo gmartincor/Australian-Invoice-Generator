@@ -1,0 +1,556 @@
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.header p {
+  color: #666;
+  font-size: 16px;
+}
+
+.invoice-generator {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.form-section {
+  background: #f8f9fa;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.preview-section {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: 1px solid #dee2e6;
+}
+
+.form-section h3 {
+  color: #495057;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #007bff;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #495057;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.15s ease-in-out;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Custom Checkbox Compacto */
+.custom-checkbox {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.custom-checkbox label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 0;
+  font-weight: 600;
+  color: #495057;
+  user-select: none;
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+.custom-checkbox label:hover {
+  color: #007bff;
+}
+
+.checkmark {
+  height: 14px;
+  width: 14px;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 2px;
+  margin-right: 8px;
+  position: relative;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.checkmark::after {
+  content: '';
+  position: absolute;
+  display: none;
+  left: 3px;
+  top: 0px;
+  width: 3px;
+  height: 6px;
+  border: solid white;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label .checkmark {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label .checkmark::after {
+  display: block;
+}
+
+.custom-checkbox input[type="checkbox"]:focus + label .checkmark {
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.checkbox-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.business-form,
+.client-form,
+.invoice-details-form {
+  margin-bottom: 30px;
+}
+
+.items-form {
+  margin-bottom: 30px;
+}
+
+.items-table {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.items-header {
+  display: grid;
+  gap: 15px;
+  background: #e9ecef;
+  padding: 15px;
+  font-weight: 600;
+  border-bottom: 1px solid #dee2e6;
+  align-items: center;
+}
+
+.items-header > div {
+  text-align: left;
+}
+
+.items-header > div:nth-child(2), /* Qty */
+.items-header > div:nth-child(3), /* Unit Price */
+.items-header > div:nth-last-child(2) /* Total */ {
+  text-align: center;
+}
+
+.items-header > div:last-child /* Actions */ {
+  text-align: center;
+}
+
+/* Alineación específica para headers GST cuando está habilitado */
+.items-header.with-gst > div:nth-child(4), /* GST Incl */
+.items-header.with-gst > div:nth-child(5), /* GST Free */
+.items-header.with-gst > div:nth-child(6) /* GST */ {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.items-header.no-gst {
+  grid-template-columns: 6fr 60px 90px 90px 80px;
+}
+
+.items-header.with-gst {
+  grid-template-columns: 5fr 60px 90px 70px 70px 80px 90px 80px;
+}
+
+.item-row {
+  display: grid;
+  gap: 15px;
+  padding: 15px;
+  border-bottom: 1px solid #dee2e6;
+  align-items: center;
+}
+
+.item-row.no-gst {
+  grid-template-columns: 6fr 60px 90px 90px 80px;
+}
+
+.item-row.with-gst {
+  grid-template-columns: 5fr 60px 90px 70px 70px 80px 90px 80px;
+}
+
+.item-row:last-child {
+  border-bottom: none;
+}
+
+/* Inputs dentro de la tabla de items */
+.item-row .form-group {
+  margin-bottom: 0;
+}
+
+.item-row .form-group input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.item-row .form-group input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Campo de descripción más grande */
+.item-row .form-group:first-child input {
+  font-weight: 500;
+}
+
+/* Alineación de contenido en item rows */
+.item-row > div:nth-child(2) input, /* Qty */
+.item-row > div:nth-child(3) input /* Unit Price */ {
+  text-align: center;
+}
+
+.calculated-field {
+  text-align: center;
+  font-weight: 600;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+}
+
+.actions {
+  text-align: center;
+}
+
+.actions .remove-btn {
+  margin: 0 auto;
+  display: block;
+}
+
+/* Checkboxes en tabla de items */
+.checkbox-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  min-height: 40px;
+}
+
+.checkbox-cell input[type="checkbox"] {
+  margin: 0;
+  margin-top: 8px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.checkbox-help {
+  font-size: 10px;
+  color: #6c757d;
+  text-align: center;
+  margin-top: 4px;
+  line-height: 1.2;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.calculated-field {
+  font-weight: 600;
+  color: #495057;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.add-item-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.add-item-btn:hover {
+  background: #218838;
+}
+
+.remove-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.remove-btn:hover {
+  background: #c82333;
+}
+
+.remove-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.actions-section {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.generate-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 15px;
+}
+
+.generate-btn:hover {
+  background: #0056b3;
+}
+
+.reset-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.reset-btn:hover {
+  background: #545b62;
+}
+
+.validation-errors {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.validation-errors h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.validation-errors ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.invoice-preview {
+  font-family: Arial, sans-serif;
+  line-height: 1.4;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #007bff;
+}
+
+.invoice-header h1 {
+  color: #007bff;
+  margin: 0;
+  font-size: 28px;
+}
+
+.invoice-meta div {
+  margin-bottom: 5px;
+}
+
+.invoice-parties {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.from-section h3,
+.to-section h3 {
+  color: #495057;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.business-name,
+.client-name {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.business-details div,
+.client-details div {
+  margin-bottom: 3px;
+}
+
+.invoice-items table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.invoice-items th,
+.invoice-items td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.invoice-items th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+}
+
+.invoice-items th:last-child,
+.invoice-items td:last-child {
+  text-align: right;
+}
+
+.invoice-totals {
+  margin-left: auto;
+  width: 300px;
+  margin-bottom: 30px;
+}
+
+.totals-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.totals-row.total {
+  border-top: 2px solid #495057;
+  border-bottom: 2px solid #495057;
+  font-size: 18px;
+  margin-top: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.invoice-notes {
+  margin-bottom: 30px;
+}
+
+.invoice-notes h4 {
+  color: #495057;
+  margin-bottom: 10px;
+}
+
+.invoice-footer {
+  border-top: 1px solid #dee2e6;
+  padding-top: 20px;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.invoice-footer p {
+  margin: 5px 0;
+}
+
+@media (max-width: 768px) {
+  .invoice-generator {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .items-header,
+  .item-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .invoice-parties {
+    grid-template-columns: 1fr;
+  }
+  
+  .invoice-header {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
