@@ -15,7 +15,12 @@ export const useInvoiceForm = () => {
     },
     phone: '',
     email: '',
-    isGstRegistered: false
+    isGstRegistered: false,
+    bankAccount: {
+      accountName: '',
+      bsb: '',
+      accountNumber: ''
+    }
   });
 
   const [client, setClient] = useState<Client>({

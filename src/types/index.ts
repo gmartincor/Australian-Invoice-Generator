@@ -1,3 +1,9 @@
+export interface BankAccount {
+  accountName: string;
+  bsb: string;
+  accountNumber: string;
+}
+
 export interface BusinessDetails {
   name: string;
   abn: string;
@@ -5,6 +11,7 @@ export interface BusinessDetails {
   phone: string;
   email: string;
   isGstRegistered: boolean;
+  bankAccount?: BankAccount;
 }
 
 export interface Address {

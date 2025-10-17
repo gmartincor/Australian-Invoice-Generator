@@ -19,6 +19,7 @@ export class InvoicePDFGenerator {
     this.addClientDetails(invoice.client);
     this.addItemsTable(invoice);
     this.addTotals(invoice.calculations, invoice.business);
+    this.addPaymentDetails(invoice.business);
     this.addFooter(invoice);
     
     this.downloadPDF(invoice.number);
@@ -174,6 +175,25 @@ export class InvoicePDFGenerator {
     this.doc.setFont(undefined, 'bold');
     this.doc.text('Total (AUD):', rightX, this.currentY);
     this.doc.text(formatCurrency(calculations.total), rightX + 50, this.currentY, { align: 'right' });
+    this.currentY += 15;
+  }
+
+  private addPaymentDetails(business: any): void {
+    if (!business.bankAccount?.accountName || !business.bankAccount?.bsb || !business.bankAccount?.accountNumber) {
+      return;
+    }
+
+    this.doc.setFontSize(12);
+    this.doc.setFont(undefined, 'bold');
+    this.doc.text('Payment Details:', this.margin, this.currentY);
+    this.currentY += 8;
+
+    this.doc.setFont(undefined, 'normal');
+    this.doc.text(`Account Name: ${business.bankAccount.accountName}`, this.margin, this.currentY);
+    this.currentY += 6;
+    this.doc.text(`BSB: ${business.bankAccount.bsb}`, this.margin, this.currentY);
+    this.currentY += 6;
+    this.doc.text(`Account Number: ${business.bankAccount.accountNumber}`, this.margin, this.currentY);
     this.currentY += 15;
   }
 

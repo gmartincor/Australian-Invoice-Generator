@@ -10,13 +10,27 @@ const STATES: AustralianState[] = ['NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT'
 
 export const BusinessForm: React.FC<BusinessFormProps> = ({ business, onChange }) => {
   const handleInputChange = (field: string, value: string | number | boolean) => {
-    if (field.includes('.')) {
-      const [parent, child] = field.split('.');
+    const fieldParts = field.split('.');
+    
+    if (fieldParts.length === 2) {
+      const [parent, child] = fieldParts;
       onChange({
         ...business,
         [parent]: {
           ...(business[parent as keyof BusinessDetails] as object),
           [child]: value
+        }
+      });
+    } else if (fieldParts.length === 3) {
+      const [parent, child, grandchild] = fieldParts;
+      onChange({
+        ...business,
+        [parent]: {
+          ...(business[parent as keyof BusinessDetails] as object),
+          [child]: {
+            ...((business[parent as keyof BusinessDetails] as any)?.[child] as object),
+            [grandchild]: value
+          }
         }
       });
     } else {
@@ -132,6 +146,40 @@ export const BusinessForm: React.FC<BusinessFormProps> = ({ business, onChange }
             value={business.email}
             onChange={(e) => handleInputChange('email', e.target.value)}
             placeholder="Optional contact email"
+          />
+        </div>
+      </div>
+
+      <h4 className="bank-section-title">Bank Account Details</h4>
+      
+      <div className="form-group">
+        <label>Account Name</label>
+        <input
+          type="text"
+          value={business.bankAccount?.accountName || ''}
+          onChange={(e) => handleInputChange('bankAccount.accountName', e.target.value)}
+          placeholder="Optional account name"
+        />
+      </div>
+
+      <div className="form-row">
+        <div className="form-group">
+          <label>BSB</label>
+          <input
+            type="text"
+            value={business.bankAccount?.bsb || ''}
+            onChange={(e) => handleInputChange('bankAccount.bsb', e.target.value)}
+            placeholder="XXX-XXX"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Account Number</label>
+          <input
+            type="text"
+            value={business.bankAccount?.accountNumber || ''}
+            onChange={(e) => handleInputChange('bankAccount.accountNumber', e.target.value)}
+            placeholder="Account number"
           />
         </div>
       </div>

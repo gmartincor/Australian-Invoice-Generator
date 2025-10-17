@@ -114,6 +114,17 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice }) => {
         </div>
       )}
 
+      {invoice.business.bankAccount?.accountName && invoice.business.bankAccount?.bsb && invoice.business.bankAccount?.accountNumber && (
+        <div className="payment-details">
+          <h4>Payment Details:</h4>
+          <div className="payment-info">
+            <div><strong>Account Name:</strong> {invoice.business.bankAccount.accountName}</div>
+            <div><strong>BSB:</strong> {invoice.business.bankAccount.bsb}</div>
+            <div><strong>Account Number:</strong> {invoice.business.bankAccount.accountNumber}</div>
+          </div>
+        </div>
+      )}
+
       <div className="invoice-footer">
         <p>This invoice includes GST where applicable.</p>
         <p>Payment terms: Net 30 days unless otherwise specified.</p>

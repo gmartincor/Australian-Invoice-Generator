@@ -3,6 +3,7 @@ import { BusinessDetails, Client, Invoice, ValidationResult, AustralianState } f
 const ABN_REGEX = /^\d{11}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const POSTCODE_REGEX = /^\d{4}$/;
+const BSB_REGEX = /^\d{3}-?\d{3}$/;
 
 const AUSTRALIAN_STATES: AustralianState[] = ['NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT'];
 
@@ -33,6 +34,10 @@ export const validatePostcode = (postcode: string): boolean => {
 
 export const validateState = (state: string): boolean => {
   return AUSTRALIAN_STATES.includes(state as AustralianState);
+};
+
+export const validateBSB = (bsb: string): boolean => {
+  return BSB_REGEX.test(bsb);
 };
 
 export const validateBusinessDetails = (business: BusinessDetails): ValidationResult => {
@@ -71,7 +76,23 @@ export const validateBusinessDetails = (business: BusinessDetails): ValidationRe
     errors.push('Valid email format required if provided');
   }
 
-  // Sin validaciones adicionales - el usuario decide si está registrado para GST
+  if (business.bankAccount) {
+    const hasAnyBankField = business.bankAccount.accountName || business.bankAccount.bsb || business.bankAccount.accountNumber;
+    
+    if (hasAnyBankField) {
+      if (!business.bankAccount.accountName?.trim()) {
+        errors.push('Account name is required when providing bank details');
+      }
+      if (!business.bankAccount.bsb?.trim()) {
+        errors.push('BSB is required when providing bank details');
+      } else if (!validateBSB(business.bankAccount.bsb)) {
+        errors.push('Valid BSB format required (XXX-XXX or XXXXXX)');
+      }
+      if (!business.bankAccount.accountNumber?.trim()) {
+        errors.push('Account number is required when providing bank details');
+      }
+    }
+  }
 
   return {
     isValid: errors.length === 0,
